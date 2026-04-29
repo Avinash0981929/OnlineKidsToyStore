@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Kid's Playland - Bright Toy Shop</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* HIGH VISIBILITY COLOR PALETTE - Improved contrast & kid-friendly bright tones */
+        body {
+            background: linear-gradient(135deg, #1E90FF 0%, #00BFFF 100%);
+            font-family: 'Comic Neue', 'Comic Neue', 'Comic Sans MS', 'Chalkboard SE', 'Chalkboard', 'Segoe UI Emoji', cursive, sans-serif;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        /* main container - bright yellow/white for excellent contrast */
+        .app-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: #FFF9E8;
+            border-radius: 70px 70px 80px 80px;
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.25), inset 0 1px 4px rgba(255, 255, 200, 0.9);
+            padding: 25px 25px 35px;
+            transition: all 0.2s ease;
+            border: 4px solid #FFD966;
+        }
+
+        /* header with bold contrast */
+        .header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            background: #FFD966;
+            padding: 15px 30px;
+            border-radius: 120px;
+            margin-bottom: 35px;
+            box-shadow: 0 12px 0 #CC7B2E;
+            transition: transform 0.1s ease;
+        }
+
+        .logo h1 {
+            font-size: 2.2rem;
+            background: linear-gradient(135deg, #D4380D, #FF6B3D);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 3px 3px 0 #FFE0A3;
+            letter-spacing: 2px;
+        }
+
+        .logo p {
+            font-size: 1rem;
+            color: #A04010;
+            font-weight: bold;
+            background: #FFF3CF;
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 40px;
+        }
+
+        .cart-info {
+            background: #FF8C42;
+            padding: 12px 25px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 5px 0 #B8530E;
+            color: white;
+        }
+
+        .cart-info:hover {
+            transform: translateY(-3px);
+            background: #FFA25B;
+            box-shadow: 0 7px 0 #B8530E;
+        }
+
+        .cart-icon {
+            font-size: 32px;
+        }
+
+        .cart-count {
+            background: #FF2A2A;
+            color: white;
+            font-weight: bold;
+            font-size: 1.4rem;
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 3px 0 #941c34;
+        }
+
+        /* category tabs - extremely vivid */
+        .category-bar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .cat-btn {
+            background-color: #40C4FF;
+            border: none;
+            font-family: inherit;
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 10px 28px;
+            border-radius: 40px;
+            color: #FFFFFF;
+            text-shadow: 1px 1px 0 #005F8C;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 6px 0 #0077B6;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .cat-btn.active {
+            background-color: #FFB74D;
+            color: #3E1F00;
+            text-shadow: none;
+            transform: translateY(2px);
+            box-shadow: 0 3px 0 #E67E22;
+        }
+
+        .cat-btn:hover {
+            transform: translateY(-3px);
+            background-color: #6AD4FF;
+            box-shadow: 0 8px 0 #005F8C;
+        }
+
+        /* Product grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        /* product card - high visibility with bold borders */
+        .product-card {
+            background: #FFFFFF;
+            border-radius: 48px;
+            overflow: hidden;
+            transition: all 0.25s ease;
+            box-shadow: 0 18px 22px -10px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            border: 4px solid #F9A825;
+        }
+
+        .product-card:hover {
+            transform: scale(1.02) translateY(-8px);
+            border-color: #FF5722;
+            box-shadow: 0 25px 30px -12px rgba(0, 0, 0, 0.4);
+        }
+
+        .product-img {
+            background: #FFECB3;
+            font-size: 90px;
+            text-align: center;
+            padding: 35px 10px 20px;
+            border-bottom: 5px solid #FFB74D;
+        }
+
+        .product-info {
+            padding: 20px 20px 25px;
+            text-align: center;
+            background: #FEF9E6;
+        }
+
+        .product-title {
+            font-size: 1.7rem;
+            font-weight: bold;
+            color: #C73600;
+            margin-bottom: 8px;
+        }
+
+        .product-desc {
+            font-size: 0.9rem;
+            color: #5D3A1A;
+            margin: 5px 0 12px;
+            font-weight: bold;
+        }
+
+        .price {
+            font-size: 1.9rem;
+            font-weight: bold;
+            color: #D84315;
+            display: inline-block;
+            background: #FFE0B5;
+            padding: 5px 18px;
+            border-radius: 60px;
+            margin: 8px 0;
+            border: 2px solid #FF8A50;
+        }
+
+        .add-btn {
+            background: #4CAF50;
+            border: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            font-family: inherit;
+            padding: 12px 20px;
+            border-radius: 50px;
+            color: #FFFFFF;
+            text-shadow: 1px 1px 0 #1B5E20;
+            margin-top: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: 0.1s linear;
+            box-shadow: 0 5px 0 #2E6B2F;
+            width: 85%;
+        }
+
+        .add-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #2E6B2F;
+        }
+
+        /* Side cart drawer - high contrast */
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(6px);
+            z-index: 1000;
+            display: flex;
+            justify-content: flex-end;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.3s;
+        }
+
+        .cart-overlay.open {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .cart-drawer {
+            background: #FFFAF0;
+            width: 90%;
+            max-width: 450px;
+            height: 100%;
+            border-radius: 45px 0 0 45px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: -8px 0 20px rgba(0, 0, 0, 0.3);
+            font-family: inherit;
+            overflow-y: auto;
+            border-left: 10px solid #FF9800;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid #FFB74D;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .cart-header h2 {
+            color: #E65100;
+            font-size: 2rem;
+        }
+
+        .close-cart {
+            background: #FF7043;
+            border: none;
+            font-size: 28px;
+            width: 48px;
+            border-radius: 60px;
+            cursor: pointer;
+            font-weight: bold;
+            color: white;
+        }
+
+        .cart-items-list {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            margin: 12px 0;
+            padding: 10px 15px;
+            border-radius: 80px;
+            border-left: 12px solid #FFB74D;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .item-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .item-name {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #BF360C;
+        }
+
+        .item-price {
+            color: #E65100;
+            font-weight: bold;
+        }
+
+        .item-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .item-actions button {
+            background: #FFCC80;
+            border: none;
+            font-size: 1.4rem;
+            width: 34px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: bold;
+            color: #5D2E00;
+        }
+
+        .cart-total {
+            background: #FFE0B5;
+            padding: 18px;
+            border-radius: 50px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.6rem;
+            color: #BF360C;
+            border: 2px solid #FF9800;
+        }
+
+        .checkout-btn {
+            background: #FF8A65;
+            border: none;
+            padding: 16px;
+            font-size: 1.3rem;
+            font-family: inherit;
+            font-weight: bold;
+            border-radius: 60px;
+            margin-top: 15px;
+            color: white;
+            text-shadow: 1px 1px 0 #BF360C;
+            cursor: pointer;
+            transition: 0.1s;
+            box-shadow: 0 4px 0 #C0392B;
+        }
+
+        .checkout-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 1px 0 #C0392B;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.3rem;
+            color: #E67E22;
+            font-weight: bold;
+        }
+
+        /* celebration animation */
+        @keyframes bouncePopup {
+            0% { transform: scale(0.8); opacity: 0; }
+            80% { transform: scale(1.1);}
+            100% { transform: scale(1); opacity: 1;}
+        }
+
+        .toast-msg {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #FFB74D;
+            color: #3E1F00;
+            padding: 14px 32px;
+            border-radius: 60px;
+            font-weight: bold;
+            font-size: 1.3rem;
+            z-index: 2000;
+            box-shadow: 0 8px 20px black;
+            display: flex;
+            gap: 12px;
+            animation: bouncePopup 0.4s ease forwards;
+            opacity: 0;
+            visibility: hidden;
+            transition: visibility 0s 0.3s;
+            border: 2px solid #FF5722;
+        }
+
+        .toast-msg.show {
+            visibility: visible;
+            opacity: 1;
+            transition: visibility 0s 0s, opacity 0.2s;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1rem;
+            color: #37474F;
+            background: #FFE0B5;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 8px 24px;
+            border-radius: 60px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 650px) {
+            .product-title {
+                font-size: 1.3rem;
+            }
+            .cat-btn {
+                font-size: 0.9rem;
+                padding: 6px 18px;
+            }
+            .header {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <div class="header">
+        <div class="logo">
+            <h1>🎈 ToyMagic Bazaar 🧸</h1>
+            <p>✨ play, giggle & shop! ✨</p>
+        </div>
+        <div class="cart-info" id="cartIconButton">
+            <span class="cart-icon">🛒</span>
+            <span class="cart-count" id="cartCountDisplay">0</span>
+            <span>🧸 my toys</span>
+        </div>
+    </div>
+
+    <div class="category-bar" id="categoryContainer">
+        <button class="cat-btn active" data-category="all">🌈 All Toys</button>
+        <button class="cat-btn" data-category="action">🤖 Action & Heroes</button>
+        <button class="cat-btn" data-category="board">🎲 Board Games</button>
+        <button class="cat-btn" data-category="plush">🐻 Plushies & Soft</button>
+        <button class="cat-btn" data-category="creative">🎨 Creative & Craft</button>
+    </div>
+
+    <div class="products-grid" id="productsGrid">
+        <!-- products dynamically -->
+    </div>
+    <footer>⭐ Click any toy — add to cart! Thousands of giggles guaranteed ⭐</footer>
+</div>
+
+<!-- Cart Modal -->
+<div id="cartOverlay" class="cart-overlay">
+    <div class="cart-drawer">
+        <div class="cart-header">
+            <h2>🧺 My Toy Basket</h2>
+            <button class="close-cart" id="closeCartBtn">✖️</button>
+        </div>
+        <div id="cartItemsContainer" class="cart-items-list">
+            <div class="empty-cart">✨ your basket is empty. add some magic! ✨</div>
+        </div>
+        <div class="cart-total" id="cartTotalPrice">Total: $0.00</div>
+        <button class="checkout-btn" id="checkoutBtn">🎁 Checkout & Play 🎁</button>
+    </div>
+</div>
+
+<div id="toastMessage" class="toast-msg">🎉 +1 added to cart! 🎉</div>
+
+<script>
+    // ---------- KID FRIENDLY TOYS DATABASE ----------
+    const products = [
+        { id: 1, name: "Super Robot Rex", desc: "Roars & lights! Stomping action robot", price: 24.99, category: "action", emoji: "🤖⚡", stock: true },
+        { id: 2, name: "Rainbow Unicorn Plush", desc: "Super soft glitter mane, cuddly friend", price: 19.99, category: "plush", emoji: "🦄🌈" },
+        { id: 3, name: "Monopoly Junior", desc: "Board game fun for little tycoons!", price: 29.99, category: "board", emoji: "🎲🏆" },
+        { id: 4, name: "Dino Explorer Set", desc: "T-Rex & volcano playset", price: 34.99, category: "action", emoji: "🦖🌋" },
+        { id: 5, name: "Crafty Beads Lab", desc: "Make bracelets & keychains", price: 15.99, category: "creative", emoji: "🎨📿" },
+        { id: 6, name: "Bunny Cuddle Puff", desc: "Fluffy bunny with carrot", price: 22.99, category: "plush", emoji: "🐰🥕" },
+        { id: 7, name: "Pirate Memory Game", desc: "Match treasure cards!", price: 12.99, category: "board", emoji: "🏴‍☠️💎" },
+        { id: 8, name: "Magic Drawing Board", desc: "Glow & erase, endless doodles", price: 27.99, category: "creative", emoji: "🖍️✨" },
+        { id: 9, name: "Ninja Action Heroes", desc: "2 pack ninja figures", price: 31.99, category: "action", emoji: "🥷⚔️" },
+        { id: 10, name: "Giant Snuggle Sloth", desc: "Huge fluffy sloth pillow", price: 39.99, category: "plush", emoji: "🦥💤" },
+        { id: 11, name: "Space Puzzle 100pc", desc: "Rocket & planets puzzle", price: 17.99, category: "board", emoji: "🚀🧩" },
+        { id: 12, name: "Clay Dino Kit", desc: "Mold your own dinos!", price: 21.99, category: "creative", emoji: "🦕🎨" }
+    ];
+
+    // Cart state
+    let cart = []; // each item: { id, name, price, quantity, emoji }
+
+    // DOM elements
+    const productsGrid = document.getElementById('productsGrid');
+    const cartCountDisplay = document.getElementById('cartCountDisplay');
+    const cartOverlay = document.getElementById('cartOverlay');
+    const cartItemsContainer = document.getElementById('cartItemsContainer');
+    const cartTotalPriceSpan = document.getElementById('cartTotalPrice');
+    const toastMsgDiv = document.getElementById('toastMessage');
+
+    let currentCategory = "all";
+    let toastTimeout = null;
+
+    // Helper: show toast animation
+    function showToast(message = "🎈 Added! Your basket 🧸") {
+        if(toastTimeout) clearTimeout(toastTimeout);
+        toastMsgDiv.textContent = message;
+        toastMsgDiv.classList.add('show');
+        toastTimeout = setTimeout(() => {
+            toastMsgDiv.classList.remove('show');
+        }, 1800);
+    }
+
+    // update cart UI (count badge, total, and drawer items)
+    function updateCartUI() {
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        cartCountDisplay.innerText = totalItems;
+        renderCartDrawer();
+    }
+
+    // add to cart logic
+    function addToCart(product) {
+        const existing = cart.find(item => item.id === product.id);
+        if (existing) {
+            existing.quantity += 1;
+            showToast(`🧸 One more ${product.name}! Now ${existing.quantity} in basket 🧺`);
+        } else {
+            cart.push({
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                quantity: 1,
+                emoji: product.emoji
+            });
+            showToast(`🎉 ${product.name} added to cart! 🎉`);
+        }
+        updateCartUI();
+    }
+
+    // modify quantity from cart drawer
+    function updateQuantity(id, delta) {
+        const itemIndex = cart.findIndex(item => item.id === id);
+        if (itemIndex === -1) return;
+        const item = cart[itemIndex];
+        const newQty = item.quantity + delta;
+        if (newQty <= 0) {
+            cart.splice(itemIndex, 1);
+            showToast(`🗑️ Removed ${item.name} from cart.`);
+        } else {
+            item.quantity = newQty;
+            showToast(`🔄 ${item.name} quantity: ${newQty}`);
+        }
+        updateCartUI();
+        if (cartOverlay.classList.contains('open')) renderCartDrawer();
+    }
+
+    // render cart drawer content
+    function renderCartDrawer() {
+        if (!cartItemsContainer) return;
+        if (cart.length === 0) {
+            cartItemsContainer.innerHTML = `<div class="empty-cart">🧸✨ Your basket is empty! Time to pick some toys ✨🧸</div>`;
+            cartTotalPriceSpan.innerText = `Total: $0.00`;
+            return;
+        }
+        let itemsHtml = '';
+        let total = 0;
+        cart.forEach(item => {
+            const subtotal = item.price * item.quantity;
+            total += subtotal;
+            itemsHtml += `
+                <div class="cart-item" data-id="${item.id}">
+                    <div class="item-details">
+                        <span class="item-name">${item.emoji || '🧸'} ${item.name}</span>
+                        <span class="item-price">$${item.price.toFixed(2)} each</span>
+                    </div>
+                    <div class="item-actions">
+                        <button class="cart-qty-minus" data-id="${item.id}">-</button>
+                        <span style="font-weight:bold; min-width: 28px; text-align:center;">${item.quantity}</span>
+                        <button class="cart-qty-plus" data-id="${item.id}">+</button>
+                        <span style="font-weight:bold; width:55px;">$${subtotal.toFixed(2)}</span>
+                    </div>
+                </div>
+            `;
+        });
+        cartItemsContainer.innerHTML = itemsHtml;
+        cartTotalPriceSpan.innerText = `Total: $${total.toFixed(2)}`;
+
+        // attach event listeners for +/- buttons inside cart
+        document.querySelectorAll('.cart-qty-minus').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const id = parseInt(btn.getAttribute('data-id'));
+                updateQuantity(id, -1);
+            });
+        });
+        document.querySelectorAll('.cart-qty-plus').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const id = parseInt(btn.getAttribute('data-id'));
+                updateQuantity(id, 1);
+            });
+        });
+    }
+
+    // render products based on category filter
+    function renderProducts() {
+        let filtered = products;
+        if (currentCategory !== "all") {
+            filtered = products.filter(p => p.category === currentCategory);
+        }
+        if (filtered.length === 0) {
+            productsGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:60px;font-size:1.8rem; background:#FFFAE6; border-radius:60px; margin:20px;">🎈 No toys here? Try another 🧸 category! 🎈</div>`;
+            return;
+        }
+        let gridHtml = '';
+        filtered.forEach(product => {
+            gridHtml += `
+                <div class="product-card" data-product-id="${product.id}">
+                    <div class="product-img">
+                        <span style="font-size: 80px; display:block;">${product.emoji}</span>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">${product.name}</div>
+                        <div class="product-desc">${product.desc}</div>
+                        <div class="price">$${product.price.toFixed(2)}</div>
+                        <button class="add-btn" data-id="${product.id}">➕ Add to Cart</button>
+                    </div>
+                </div>
+            `;
+        });
+        productsGrid.innerHTML = gridHtml;
+
+        // attach event listeners to all add buttons
+        document.querySelectorAll('.add-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const prodId = parseInt(btn.getAttribute('data-id'));
+                const productToAdd = products.find(p => p.id === prodId);
+                if (productToAdd) addToCart(productToAdd);
+            });
+        });
+        // optional product card click (illustrative)
+        document.querySelectorAll('.product-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                if (e.target.classList && e.target.classList.contains('add-btn')) return;
+                const idAttr = card.getAttribute('data-product-id');
+                if (idAttr) {
+                    const prod = products.find(p => p.id == idAttr);
+                    if (prod) addToCart(prod);
+                }
+            });
+        });
+    }
+
+    // category switching with active effect
+    function initCategories() {
+        const catBtns = document.querySelectorAll('.cat-btn');
+        catBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const category = btn.getAttribute('data-category');
+                currentCategory = category;
+                catBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderProducts();
+            });
+        });
+    }
+
+    // cart overlay controls
+    function initCartOverlay() {
+        const cartIconButton = document.getElementById('cartIconButton');
+        const closeBtn = document.getElementById('closeCartBtn');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+
+        function openCart() {
+            renderCartDrawer();
+            cartOverlay.classList.add('open');
+        }
+        function closeCart() {
+            cartOverlay.classList.remove('open');
+        }
+        cartIconButton.addEventListener('click', openCart);
+        closeBtn.addEventListener('click', closeCart);
+        cartOverlay.addEventListener('click', (e) => {
+            if (e.target === cartOverlay) closeCart();
+        });
+
+        // checkout celebration
+        checkoutBtn.addEventListener('click', () => {
+            if (cart.length === 0) {
+                showToast("🧸 Add some toys before checkout! 🧸");
+                return;
+            }
+            const totalItems = cart.reduce((sum,i)=>sum+i.quantity,0);
+            showToast(`🎉 HOORAY! You bought ${totalItems} magical toys! 🎉 Thank you! 🎁`);
+            cart = [];
+            updateCartUI();
+            renderCartDrawer();
+            closeCart();
+        });
+    }
+
+    // load initial and attach
+    function init() {
+        renderProducts();
+        initCategories();
+        updateCartUI();
+        initCartOverlay();
+        renderCartDrawer();
+    }
+
+    init();
+</script>
+</body>
+</html>
